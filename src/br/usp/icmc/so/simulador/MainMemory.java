@@ -14,7 +14,7 @@ public class MainMemory {
         int i = 0, pointer;
         while (true) {
             for (; i < size && cell[i] != 0; i++) ;
-            System.out.println("Found available pointer at " + i);
+            //System.out.println("Found available pointer at " + i);
 
             int available = 0;
             for (; i < size && available < blockSize && cell[i] == 0; i++) {
