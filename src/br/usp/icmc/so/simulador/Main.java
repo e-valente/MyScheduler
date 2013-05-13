@@ -23,7 +23,7 @@ public class Main {
         
         //exemplo FIFO
         
-        
+        /*
         SchedulerFifo s = new SchedulerFifo(new MainMemory(100));
         s.addProcess(new Process(0, 10, 8));
         s.addProcess(new Process(1, 11, 8));
@@ -31,6 +31,16 @@ public class Main {
         s.addProcess(new Process(3, 15, 8));
         s.addProcess(new Process(4, 10, 8));
         s.addProcess(new Process(5, 12, 8));
+        s.execute();
+        * */
+        
+        SchedulerRRPriority s = new SchedulerRRPriority(new MainMemory(100), 8);
+        s.addProcess(new Process(0, 10, 8), 5);
+        s.addProcess(new Process(1, 11, 8), 4);
+        s.addProcess(new Process(2, 5, 8), 5);
+        s.addProcess(new Process(3, 15, 8), 4);
+        s.addProcess(new Process(4, 10, 8), 4);
+        s.addProcess(new Process(5, 12, 8), 4);
         s.execute();
         
 

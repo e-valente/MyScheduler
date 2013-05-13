@@ -9,7 +9,9 @@ public abstract class Scheduler extends GlobalTime {
     public Statistics mystatistics;
    
 
-    public abstract void addProcess(Process p); //aloca o processo com a politica FIFO
+    public abstract void addProcess(Process p); 
+    //public abstract void addProcess(Process p, int priority); 
+
 
     public abstract void execute();
     //recomenda-se criar outras politicas como: RR, SJF, etc

@@ -58,9 +58,6 @@ public class SchedulerRoundRobin extends Scheduler {
             while (iterator.hasNext()) {
                 p = iterator.next();
 
-
-
-
                 if (quantum > p.totalExecutionTime) {
                     incrementTime(p.totalExecutionTime);
                 } else {
