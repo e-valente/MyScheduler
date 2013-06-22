@@ -39,4 +39,14 @@ public class MainMemory {
             cell[i] = 0;
         }
     }
+    
+    
+    /**
+     *
+     * @return
+     */
+    public int getSize()
+    {
+        return size;
+    }
 }

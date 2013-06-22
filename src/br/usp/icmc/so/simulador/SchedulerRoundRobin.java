@@ -21,10 +21,14 @@ public class SchedulerRoundRobin extends Scheduler {
     private double quantum;
     public int n;
 
-    public SchedulerRoundRobin(MainMemory mem, double _quantum) throws IOException {
+    public SchedulerRoundRobin(int mmemtype, int mmemarg1, MainMemory mem, double _quantum) throws IOException {
         processes = new ArrayList<>();
         this.mem = mem;
         this.quantum = _quantum;
+        
+        //particao dinamica
+        if(mmemtype == 1)
+            mmd = new MemoryManagerDynamicPartition(mmemarg1);
 
         mystatistics = new Statistics();
 
@@ -42,6 +46,7 @@ public class SchedulerRoundRobin extends Scheduler {
         int pointer = mem.allocMemory(p.requiredMemory);
         p.setMemoryPointer(pointer);
         processes.add(p);
+        mmd.manageDynamicPartition(p, mem);
     }
 
     @Override
