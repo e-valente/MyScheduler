@@ -30,20 +30,24 @@ public class Main {
         //simulacao padrao
         if (simtype == 1) {
             //em Mb
-            totalmem = 256;
+            totalmem = 512;
             mmemtype = 1;  //particao dinamica
             mmemarg1 = 1;
+            totalProcess = 5;
+            System.out.println("===================================");
+            System.out.println("Executando simulação padrão...");
+            System.out.println("Total de Memória real: " + totalmem + "MB");
+            System.out.println("Total de Processos: " + totalProcess);
 
 
             SchedulerRoundRobin s = new SchedulerRoundRobin(mmemtype, mmemarg1, new MainMemory(totalmem), 4);
-            totalProcess = 5;
+
 
             for (int i = 0; i < totalProcess; i++) {
                 memEachProcess = randomGenerator.nextInt(totalmem / 10) + 1;
-                System.out.println("Processo " + i + " requereu " + memEachProcess + " Mb");
-                s.addProcess(new Process(i, (i+1) * 10, memEachProcess));
+                s.addProcess(new Process(i, (i + 1) * 10, memEachProcess));
             }
-            
+
             s.execute();
 
 
@@ -53,7 +57,7 @@ public class Main {
         //simulacao personalizada
         if (simtype == 2) {
 
-            System.out.print("Escolha o total de memória real(em MB) ex: 100 : ");
+            System.out.print("Escolha o total de memória real(em MB) ex: 256 : ");
             totalmem = in.nextInt();
 
             System.out.println("Escalonadores disponíveis:\n");
@@ -68,16 +72,23 @@ public class Main {
             System.out.print("Escolha o total de processos: ");
             totalProcess = in.nextInt();
 
-            mmemtype = 0;
-            mmemarg1 = 0;
+            mmemtype = 1;
+            mmemarg1 = 1;
+
+            System.out.println("===================================");
+            System.out.println("Executando simulação personalizada...");
+            System.out.println("Total de Memória real: " + totalmem + "MB");
+            System.out.println("Total de Processos: " + totalProcess);
+
+
+
             //FIFO
             if (scheduleType == 1) {
-                SchedulerFifo s = new SchedulerFifo(new MainMemory(totalmem));
+                SchedulerFifo s = new SchedulerFifo(mmemtype, mmemarg1, new MainMemory(totalmem));
 
                 for (int i = 0; i < totalProcess; i++) {
                     memEachProcess = randomGenerator.nextInt(totalmem / 10);
-                    System.out.println("Processo " + i + " requereu " + memEachProcess + " Mb");
-                    s.addProcess(new Process(i, i * 10, memEachProcess));
+                    s.addProcess(new Process(i, (i + 1) * 10, memEachProcess));
                 }
 
 
@@ -87,12 +98,11 @@ public class Main {
 
             //SJF
             if (scheduleType == 2) {
-                SchedulerSJF s = new SchedulerSJF(new MainMemory(totalmem));
+                SchedulerSJF s = new SchedulerSJF(mmemtype, mmemarg1, new MainMemory(totalmem));
 
                 for (int i = 0; i < totalProcess; i++) {
                     memEachProcess = randomGenerator.nextInt(totalmem / 10);
-                    System.out.println("Processo " + i + " requereu " + memEachProcess + " Mb");
-                    s.addProcess(new Process(i, i * 10, memEachProcess));
+                    s.addProcess(new Process(i, (i + 1) * 10, memEachProcess));
                 }
 
 
@@ -101,12 +111,11 @@ public class Main {
 
             //RR
             if (scheduleType == 3) {
-                SchedulerRoundRobin s = new SchedulerRoundRobin(mmemtype, mmemarg1,new MainMemory(totalmem), 4);
+                SchedulerRoundRobin s = new SchedulerRoundRobin(mmemtype, mmemarg1, new MainMemory(totalmem), 4);
 
                 for (int i = 0; i < totalProcess; i++) {
                     memEachProcess = randomGenerator.nextInt(totalmem / 10);
-                    System.out.println("Processo " + i + " requereu " + memEachProcess + " Mb");
-                    s.addProcess(new Process(i, i * 10, memEachProcess));
+                    s.addProcess(new Process(i, (i + 1) * 10, memEachProcess));
                 }
 
 
@@ -117,13 +126,12 @@ public class Main {
 
             //RR com prioridade
             if (scheduleType == 4) {
-                SchedulerRRPriority s = new SchedulerRRPriority(new MainMemory(totalmem), 4);
+                SchedulerRRPriority s = new SchedulerRRPriority(mmemtype, mmemarg1, new MainMemory(totalmem), 4);
 
                 for (int i = 0; i < totalProcess; i++) {
                     int priority = randomGenerator.nextInt(6);
                     memEachProcess = randomGenerator.nextInt(totalmem / 10);
-                    System.out.println("Processo " + i + " requereu " + memEachProcess + " Mb");
-                    s.addProcess(new Process(i, i * 10, memEachProcess), priority);
+                    s.addProcess(new Process(i, (i + 1) * 10, memEachProcess), priority);
                 }
 
                 s.execute();

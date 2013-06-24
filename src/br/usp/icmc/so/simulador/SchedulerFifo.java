@@ -16,9 +16,14 @@ import java.util.ArrayList;
  */
 public class SchedulerFifo extends Scheduler {
 
-    public SchedulerFifo(MainMemory mem) throws IOException {
+    public SchedulerFifo(int mmemtype, int mmemarg1, MainMemory mem) throws IOException {
         processes = new ArrayList<Process>();
         this.mem = mem;
+        
+         //particao dinamica
+        if(mmemtype == 1)
+            mmd = new MemoryManagerDynamicPartition(mmemarg1, mem);
+
 
         mystatistics = new Statistics();
 
@@ -36,6 +41,7 @@ public class SchedulerFifo extends Scheduler {
         int pointer = mem.allocMemory(p.requiredMemory);
         p.setMemoryPointer(pointer);
         processes.add(p);
+         mmd.manageDynamicPartition(p, mem);
     }
 
     @Override

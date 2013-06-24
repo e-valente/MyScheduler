@@ -28,7 +28,7 @@ public class SchedulerRoundRobin extends Scheduler {
         
         //particao dinamica
         if(mmemtype == 1)
-            mmd = new MemoryManagerDynamicPartition(mmemarg1);
+            mmd = new MemoryManagerDynamicPartition(mmemarg1, mem);
 
         mystatistics = new Statistics();
 

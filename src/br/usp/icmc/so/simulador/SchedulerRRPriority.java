@@ -26,7 +26,7 @@ public class SchedulerRRPriority extends Scheduler {
     private List<Process> processesP1;
     private double quantum;
 
-    public SchedulerRRPriority(MainMemory mem, double _quantum) throws IOException {
+    public SchedulerRRPriority(int mmemtype, int mmemarg1, MainMemory mem, double _quantum) throws IOException {
         processesP5 = new ArrayList<Process>();
         processesP4 = new ArrayList<Process>();
         processesP3 = new ArrayList<Process>();
@@ -35,6 +35,11 @@ public class SchedulerRRPriority extends Scheduler {
 
         this.quantum = _quantum;
         this.mem = mem;
+
+        //particao dinamica
+        if (mmemtype == 1) {
+            mmd = new MemoryManagerDynamicPartition(mmemarg1, mem);
+        }
 
         mystatistics = new Statistics();
 
@@ -54,18 +59,24 @@ public class SchedulerRRPriority extends Scheduler {
 
         if (priority == 5) {
             processesP5.add(p);
+            mmd.manageDynamicPartition(p, mem);
         }
         if (priority == 4) {
             processesP4.add(p);
+            mmd.manageDynamicPartition(p, mem);
+
         }
         if (priority == 3) {
             processesP3.add(p);
+            mmd.manageDynamicPartition(p, mem);
         }
         if (priority == 2) {
             processesP2.add(p);
+            mmd.manageDynamicPartition(p, mem);
         }
         if (priority == 1) {
             processesP1.add(p);
+            mmd.manageDynamicPartition(p, mem);
         }
 
         if (priority > 5 && priority < 1) {
@@ -279,7 +290,7 @@ public class SchedulerRRPriority extends Scheduler {
         }
 
         writeFootPrintReport();
-       System.out.println("\nRelatório completo em ReportRRPriority.txt (no diretório raíz do projeto)\n");
+        System.out.println("\nRelatório completo em ReportRRPriority.txt (no diretório raíz do projeto)\n");
 
 
     }

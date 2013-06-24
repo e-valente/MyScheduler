@@ -11,7 +11,8 @@ package br.usp.icmc.so.simulador;
 abstract class MemoryManager {
     
     
-    protected int totalmem;
+    protected int totalmemkb;
+    
    
     public abstract void manageDynamicPartition(Process p, MainMemory m);
     
